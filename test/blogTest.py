@@ -25,12 +25,12 @@ def getPage(url):
 
 
 if __name__ == '__main__':
-    url = 'http://blog.csdn.net/wds2006sdo/article/details/51804133'
+    url = 'http://blog.csdn.net/wds2006sdo/article/details/51210896'
 
-    for i in range(30):
-        print i
+    for i in range(5000):
         html = getPage(url)
 
         # 随机睡眠1~60秒
         sleep_time = random.randint(1,60)
+        print i,' sleep ',sleep_time,' second'
         time.sleep(sleep_time)
