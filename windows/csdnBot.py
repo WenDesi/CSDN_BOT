@@ -8,6 +8,8 @@ import codecs
 
 class CSDN(object):
     basic_url = 'http://blog.csdn.net/wds2006sdo/article/list/%d'
+    time_min = 10
+    time_max = 20
 
     def __init__(self):
         self.blogs = self.get_pages()
@@ -81,11 +83,13 @@ class CSDN(object):
             sum += blog[1]
 
         mean = int(float(sum) / float(len(self.blogs)))
+        order_num = mean
 
         end = 0
         for blog in self.blogs:
-            blog.append(end+mean+blog[1])
-            end += mean+blog[1]
+            blog.append(end+mean+blog[1]+order_num)
+            end += mean+blog[1]+order_num
+            order_num = int(order_num ** 0.5)
 
     def select_page(self):
         num = random.randint(1,self.random_range)
@@ -102,7 +106,7 @@ class CSDN(object):
         time.sleep(sleep_time)
 
     def robot_start(self):
-        robot_size = random.randint(800,1200)
+        robot_size = random.randint(self.time_min,self.time_max)
         print robot_size
         for i in range(robot_size):
             url = self.select_page()
