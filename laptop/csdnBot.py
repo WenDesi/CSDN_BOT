@@ -32,10 +32,12 @@ class CSDN(object):
                 continue
 
             if '百度' in html:
+                print 'network workable!'
                 return True
 
             time.sleep(self.sleep_time)
 
+        print 'network not work!'
         return False
 
 
