@@ -15,7 +15,7 @@ class CSDN(object):
     base_url = 'http://10.0.10.66/cgi-bin/srun_portal?username=%s&password=%s&action=login&ac_id=3'
     test_url = 'http://www.baidu.com'
 
-    def __init__(self):
+    def init(self):
         self.blogs = self.get_pages()
         self.add_eachblog_random_range()
         self.random_range = self.blogs[-1][2]
@@ -129,6 +129,8 @@ class CSDN(object):
     def robot_start(self):
         if not self.is_network_accessable():
             return
+
+        self.init()
 
         while True:
             url = self.select_page()
