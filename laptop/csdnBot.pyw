@@ -14,7 +14,7 @@ class CSDN(object):
     run_times = 30
 
     base_url = 'http://10.0.10.66/cgi-bin/srun_portal?username=%s&password=%s&action=login&ac_id=3'
-    test_url = 'http://www.baidu.com'
+    test_url = 'http://blog.csdn.net/wds2006sdo'
 
     def init(self):
         self.blogs = self.get_pages()
@@ -29,10 +29,12 @@ class CSDN(object):
 
         for i in range(self.try_times):
             html = self.access_by_url(self.test_url)
+            print html
+
             if not html:
                 continue
 
-            if '百度' in html:
+            if 'wds2006sdo' in html:
                 print 'network workable!'
                 return True
 
