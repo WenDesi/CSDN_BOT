@@ -14,7 +14,7 @@ class CSDN(object):
     run_times = 30
 
     base_url = 'http://10.0.10.66/cgi-bin/srun_portal?username=%s&password=%s&action=login&ac_id=3'
-    test_url = 'http://www.baidu.com'
+    test_url = 'http://blog.csdn.net/wds2006sdo'
 
     def init(self):
         self.blogs = self.get_pages()
@@ -22,23 +22,25 @@ class CSDN(object):
         self.random_range = self.blogs[-1][2]
 
 
-        for blog in self.blogs:
-            print blog[0], ' ' ,blog[1],' ',blog[2]
+        # for blog in self.blogs:
+        #     print blog[0], ' ' ,blog[1],' ',blog[2]
 
     def is_network_accessable(self):
 
         for i in range(self.try_times):
             html = self.access_by_url(self.test_url)
+            # print html
+			
             if not html:
                 continue
 
-            if '百度' in html:
-                print 'network workable!'
+            if 'wds2006sdo' in html:
+                # print 'network workable!'
                 return True
 
             time.sleep(self.sleep_time)
 
-        print 'network not work!'
+        # print 'network not work!'
         return False
 
 
@@ -58,7 +60,7 @@ class CSDN(object):
             response.close()
             return html
         except Exception as e:
-            print 'URL Request Error:', e
+            # print 'URL Request Error:', e
             return None
 
     def get_pages(self):
@@ -115,7 +117,7 @@ class CSDN(object):
 
     def select_page(self):
         num = random.randint(1,self.random_range)
-        print 'num ',num
+        # print 'num ',num
         i = 0
         while i < len(self.blogs) and num > self.blogs[i][2]:
             i += 1
@@ -124,7 +126,7 @@ class CSDN(object):
 
     def sleep(self):
         sleep_time = random.randint(1,60)
-        print ' sleep ',sleep_time,' second'
+        # print ' sleep ',sleep_time,' second'
         time.sleep(sleep_time)
 
     def robot_start(self):
@@ -135,7 +137,7 @@ class CSDN(object):
 
         for i in range(self.run_times):
             url = self.select_page()
-            print url
+            # print url
             self.access_by_url(url)
             self.sleep()
 

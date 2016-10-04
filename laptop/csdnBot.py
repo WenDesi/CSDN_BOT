@@ -8,10 +8,15 @@ import codecs
 
 class CSDN(object):
     basic_url = 'http://blog.csdn.net/wds2006sdo/article/list/%d'
-    time_min = 30
-    time_max = 40
 
-    def __init__(self):
+    try_times = 1
+    sleep_time = 10
+    run_times = 30
+
+    base_url = 'http://10.0.10.66/cgi-bin/srun_portal?username=%s&password=%s&action=login&ac_id=3'
+    test_url = 'http://blog.csdn.net/wds2006sdo'
+
+    def init(self):
         self.blogs = self.get_pages()
         self.add_eachblog_random_range()
         self.random_range = self.blogs[-1][2]
@@ -19,6 +24,25 @@ class CSDN(object):
 
         for blog in self.blogs:
             print blog[0], ' ' ,blog[1],' ',blog[2]
+
+    def is_network_accessable(self):
+
+        for i in range(self.try_times):
+            html = self.access_by_url(self.test_url)
+            print html
+			
+            if not html:
+                continue
+
+            if 'wds2006sdo' in html:
+                print 'network workable!'
+                return True
+
+            time.sleep(self.sleep_time)
+
+        print 'network not work!'
+        return False
+
 
     def access_by_url(self,url):
         try:
@@ -83,12 +107,12 @@ class CSDN(object):
             sum += blog[1]
 
         mean = int(float(sum) / float(len(self.blogs)))
-        order_num = mean
+        order_num = mean * 100
 
         end = 0
         for blog in self.blogs:
-            blog.append(end+mean+blog[1]+order_num)
-            end += mean+blog[1]+order_num
+            blog.append(end+mean+order_num)
+            end += mean+order_num
             order_num = int(order_num ** 0.5)
 
     def select_page(self):
@@ -106,19 +130,22 @@ class CSDN(object):
         time.sleep(sleep_time)
 
     def robot_start(self):
-        robot_size = random.randint(self.time_min,self.time_max)
-        print robot_size
-        for i in range(robot_size):
+        if not self.is_network_accessable():
+            return
+
+        self.init()
+
+        for i in range(self.run_times):
             url = self.select_page()
             print url
             self.access_by_url(url)
             self.sleep()
 
 
-
-
 if __name__ == '__main__':
     csdn = CSDN()
     csdn.robot_start()
+
+
 
 
