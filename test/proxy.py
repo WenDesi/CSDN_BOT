@@ -77,7 +77,7 @@ def Proxy_read(proxy_list, user_agent_list, i):
 
     req = Request(r'http://blog.csdn.net/wds2006sdo/article/details/52246827',headers=headers)
     try:
-        html = urlopen(req).read().decode('utf-8')
+        html = urlopen(req,timeout = 5).read().decode('utf-8')
     except Exception as e:
         print '******打开失败！******'
     else:
