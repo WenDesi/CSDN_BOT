@@ -27,27 +27,11 @@ class Proxy(object):
             html = response.read()
 
             response.close()
-            return html
+            return html.decode('gbk')
         except Exception as e:
             print 'URL Request Error:', e
             return None
 
-    def __get_html(self,url):
-        headers = {
-                'Host': 'www.ip181.com',
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36',
-                'Accept': r'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-                'Referer': r'http://www.ip181.com/daili/1.html',
-                }
-
-        req = Request(url,headers=headers)
-        print url
-        html = None
-        try:
-            html = urlopen(req,timeout = 5).read().decode('utf-8')
-        except Exception as e:
-            print '******打开失败！******'
-        print html
 
 
     def get_workable_ip(self):
